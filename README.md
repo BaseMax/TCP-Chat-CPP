@@ -61,7 +61,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Authors
 
-- **Kambiz Asadzade** - Ported to C++
+- **Kambiz Asadzadeh** - Ported to C++
 - **Max Base** - Original Developer
 
 ## Contribution
