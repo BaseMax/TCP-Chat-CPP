@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <errno.h>
+#include <vector>
 
 constexpr std::string_view HOSTNAME = "127.0.0.1";
 constexpr int PORT = 3000;
@@ -219,8 +220,8 @@ private:
     }
 
     void handle_client_data(SocketT socket) {
-        char buffer[BUFFER_SIZE];
-        ssize_t bytes = recv(socket, buffer, BUFFER_SIZE - 1, 0);
+        std::vector<char> buffer(BUFFER_SIZE);
+        ssize_t bytes = recv(socket, buffer.data(), buffer.size() - 1, 0);
 
         if (bytes < 0) {
             if (errno == ECONNRESET || errno == EPIPE) {
@@ -238,9 +239,12 @@ private:
             return;
         }
 
-        buffer[bytes] = '\0';
-        std::string_view message(buffer);
-        message = message.substr(0, message.find_first_of("\r\n"));
+        buffer[bytes] = '\0';  // Null terminate
+        std::string_view message(buffer.data(), static_cast<size_t>(bytes));
+        auto end_pos = message.find_first_of("\r\n");
+        if (end_pos != std::string_view::npos) {
+            message = message.substr(0, end_pos);
+        }
 
         if (message.empty()) {
             return;
@@ -258,7 +262,7 @@ private:
 
 int main() {
     try {
-        ChatServer<> server;  // Default: int socket, std::list container
+        ChatServer<> server;
         server.run();
     } catch (const std::exception& e) {
         std::print(stderr, "Fatal error: {}\n", e.what());
