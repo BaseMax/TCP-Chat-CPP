@@ -4,7 +4,7 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
 ![Status: Active](https://img.shields.io/badge/status-active-brightgreen.svg)
 
-A simple TCP-based chat server and client written in C++. This project was originally created by **Max Base**, and later ported to C++ by **Kambiz Asadzade**.
+A simple TCP-based chat server and client written in C++. This project was originally created by **Max Base**, and later ported to C++ by **Kambiz Asadzadeh**.
 
 ![TCP-Chat-CPP](demo.jpg)
 
